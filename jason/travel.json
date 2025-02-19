@@ -1,0 +1,25 @@
+[
+    {
+        "id": 1,
+        "title": "Travel to Paris",
+        "category": "Travel",
+        "description": "Paris is the capital of France, known for its art, fashion, gastronomy and culture.",
+        "image": "/images/travel1.webp"
+    },
+    {
+        "id": 2,
+        "title": "Travel to Paris",
+        "category": "Travel",
+        "description": "Paris is the capital of France, known for its art, fashion, gastronomy and culture.",
+        "image": "/images/travel2.webp"
+    },
+    {
+        "id": 3,
+        "title": "Travel to Paris",
+        "category": "Travel",
+        "description": "Paris is the capital of France, known for its art, fashion, gastronomy and culture.",
+        "image": "/images/travel3.webp"
+    }
+
+
+]
