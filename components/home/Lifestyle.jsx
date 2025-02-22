@@ -7,7 +7,12 @@ import data from "@/jason/lifestyle.json";
 import rightbardata from "@/jason/rightbar.json";
 import Rightbar from "../common/Rightbar";
 
-export default function Lifestyle() {
+export default function Lifestyle({
+  articles,
+  categories,
+  imagePath,
+  blog_list,
+}) {
   const element = data.slice(0, 3);
   const element2 = rightbardata.slice(0, 3);
   return (
@@ -23,14 +28,17 @@ export default function Lifestyle() {
       </div>
       <div className="flex flex-col lg:flex-row gap-6 lg:gap-14">
         <div className=" w-full lg:w-[77%]">
+          
           <Cards mdcol={3} lgcol={3} data={element} />
         </div>
         <div className="w-full lg:w-[23%] bg-gray-100 p-7 rounded-[5px] ">
           <Rightbar
-            data={element2}
-            hiddencategories={"hidden"}
-            hiddenbox={"hidden"}
-            heading={"Most Viewed"}
+            
+            articles={articles}
+               categories={categories}
+               imagePath={imagePath}
+                heading="Editors Choice"
+
           />
         </div>
       </div>
