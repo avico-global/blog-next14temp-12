@@ -126,7 +126,7 @@ export default function Categories({
         />
       </Head>
 
-      <Navbar logo={logo} imagePath={imagePath} categories={categories || []} />
+      <Navbar logo={logo} imagePath={imagePath} blog_list={blog_list} categories={categories || []} />
       <Container>
         <div className="pt-20 grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 gap-12 mt-16 ">
           <div className="flex flex-col gap-6 md:gap-9 lg:gap-12 col-span-1  md:col-span-2 lg:col-span-3">
