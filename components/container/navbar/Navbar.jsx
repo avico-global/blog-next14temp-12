@@ -117,7 +117,7 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
             {categories?.slice(0, 2)?.map((category, index) => (
               <Link
                 key={index}
-                href={`/${sanitizeUrl(category.title)}`}
+                href={`/category/${sanitizeUrl(category.title)}`}
                 className="hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-background3 hover:via-background4 hover:to-background1 transition-all duration-300 relative group py-2 hover:-translate-y-0.5"
                 title={category.title}
               >
@@ -131,7 +131,7 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
             {categories?.slice(2, 4)?.map((category, index) => (
               <Link
                 key={index}
-                href={`/${sanitizeUrl(category.title)}`}
+                href={`/category/${sanitizeUrl(category.title)}`}
                 className="hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-background3 hover:via-background4 hover:to-background1 transition-all duration-300 relative group py-2 hover:-translate-y-0.5"
                 title={category.title}
               >
@@ -174,9 +174,7 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
                     filteredBlogs.map((blog, index) => (
                       <Link
                         key={index}
-                        href={`/${sanitizeUrl(
-                          blog.article_category
-                        )}/${sanitizeUrl(blog.title)}`}
+                        href={`/${sanitizeUrl(blog.title)}`}
                         className="block p-5 hover:bg-gray-50/80 transition-colors duration-300"
                         title={blog.title}
                       >
@@ -200,9 +198,7 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
                       {lastThreeBlogs.map((blog, index) => (
                         <Link
                           key={index}
-                          href={`/${sanitizeUrl(
-                            blog.article_category
-                          )}/${sanitizeUrl(blog.title)}`}
+                          href={`/${sanitizeUrl(blog.title)}`}
                           className="block py-3 px-4 rounded-lg hover:bg-gray-50/80 transition-all duration-300 mb-2"
                           title={blog.title}
                         >

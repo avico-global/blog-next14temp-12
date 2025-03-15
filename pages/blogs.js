@@ -1,8 +1,8 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/container/navbar/Navbar";
 import Footer from "@/components/container/footer/Footer";
 import Container from "@/components/common/Container";
 import Rightbar from "@/components/common/Rightbar";
+import JsonLd from "@/components/json/JsonLd";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -26,7 +26,7 @@ export default function Blogs({
 }) {
   // Filter out any blog entries with empty image paths
   const filteredBlogList = blog_list?.filter((blog) => blog.image) || [];
-  const data = element?.slice(0, 3) || [];
+  const data = filteredBlogList?.slice(0, 3) || [];
 
   const backgrounds = [
     "bg-background1",
@@ -114,9 +114,7 @@ export default function Blogs({
                           } relative w-full`}
                         >
                           <Link
-                            href={`/${sanitizeUrl(
-                              item.article_category
-                            )}/${sanitizeUrl(item?.title)}`}
+                            href={`/${sanitizeUrl(item?.title)}`}
                             title={item?.title || "Blog post"}
                           >
                             <Image
@@ -146,9 +144,7 @@ export default function Blogs({
                         <div className="h-full flex flex-col items-center justify-between space-y-2">
                           <Link
                             title={item?.title || "Blog post"}
-                            href={`/${sanitizeUrl(
-                              item.article_category
-                            )}/${sanitizeUrl(item?.title)}`}
+                            href={`/${sanitizeUrl(item?.title)}`}
                             className="px-6 text-[28px] tracking-tighter leading-[28px] font-bold text-gray-700 mb-3"
                           >
                             <h2>{item?.title}</h2>
@@ -202,23 +198,7 @@ export default function Blogs({
         data={{
           "@context": "https://www.schema.org",
           "@graph": [
-            {
-              "@type": "WebPage",
-              "@id": `https://${domain}/`,
-              url: `https://${domain}/`,
-              name: meta?.title,
-              isPartOf: {
-                "@id": `https://${domain}`,
-              },
-              description: meta?.description,
-              inLanguage: "en-US",
-              primaryImageOfPage: {
-                "@type": "ImageObject",
-                url: `${imagePath}/${banner?.file_name}`,
-                width: 1920,
-                height: 1080,
-              },
-            },
+           
             {
               "@type": "Organization",
               "@id": `https://${domain}`,

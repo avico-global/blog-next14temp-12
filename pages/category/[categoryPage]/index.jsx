@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
-import Container from "../../components/common/Container";
-import Navbar from "../../components/container/navbar/Navbar";
-import Footer from "../../components/container/footer/Footer";
-import Rightbar from "../../components/common/Rightbar";
+import Container from "../../../components/common/Container";
+import Navbar from "../../../components/container/navbar/Navbar";
+import Footer from "../../../components/container/footer/Footer";
+import Rightbar from "../../../components/common/Rightbar";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -16,12 +16,10 @@ import {
   callBackendApi,
   getDomain,
   getImagePath,
-  robotsTxt,
   sanitizeUrl,
 } from "@/lib/myFun";
 import Head from "next/head";
 
-// Initialize Raleway font
 const raleway = Raleway({
   subsets: ["cyrillic", "cyrillic-ext", "latin", "latin-ext"],
 });
@@ -36,22 +34,31 @@ export default function Categories({
   favicon,
 }) {
   const router = useRouter();
-  const { category } = router.query;
+  const { categoryPage } = router.query;
   const breadcrumbs = useBreadcrumbs();
   const safeBlogList = Array.isArray(blog_list) ? blog_list : [];
   const filteredBlogList = safeBlogList.filter((item) => {
-    const searchContent = sanitizeUrl(category);
+    const searchContent = sanitizeUrl(categoryPage);
     return sanitizeUrl(item.article_category) === searchContent;
   });
 
   useEffect(() => {
-    if (category && (category.includes("%20") || category.includes(" "))) {
-      const newCategory = category.replace(/%20/g, "-").replace(/ /g, "-");
+    const currentPath = router.asPath;
+
+    if (categoryPage && (categoryPage.includes("%20") || categoryPage.includes(" "))) {
+      const newCategory = categoryPage.replace(/%20/g, "-").replace(/ /g, "-");
       router.replace(`/${newCategory}`);
     }
-  }, [category, router]);
 
-  const formattedCategory = category ? category.replaceAll("-", " ") : "";
+    if (currentPath.includes("contact-us")) {
+      router.replace("/contact");
+    }
+    if (currentPath.includes("about-us")) {
+      router.replace("/about");
+    }
+  }, [categoryPage, router]);
+
+  const formattedCategory = categoryPage ? categoryPage.replaceAll("-", " ") : "";
 
   const backgrounds = [
     "bg-background1",
@@ -72,7 +79,7 @@ export default function Categories({
         <title>
           {meta?.title?.replaceAll(
             "##category##",
-            category
+            categoryPage
               ?.replace(/[-&]+/g, " ")
               .replace(/\s+/g, " ")
               .trim()
@@ -85,7 +92,7 @@ export default function Categories({
           name="description"
           content={meta?.description.replaceAll(
             "##category##",
-            category
+            categoryPage
               ?.replace(/[-&]+/g, " ")
               .replace(/\s+/g, " ")
               .trim()
@@ -96,7 +103,7 @@ export default function Categories({
         />
         <link rel="author" href={`https://www.${domain}`} />
         <link rel="publisher" href={`https://www.${domain}`} />
-        <link rel="canonical" href={`https://www.${domain}/${category}`} />
+        <link rel="canonical" href={`https://www.${domain}/${categoryPage}`} />
         {/* <meta name="robots" content="noindex" /> */}
         <meta name="theme-color" content="#008DE5" />
         <link rel="manifest" href="/manifest.json" />
@@ -161,9 +168,7 @@ export default function Categories({
                           } relative w-full `}
                         >
                           <Link
-                            href={`/${sanitizeUrl(
-                              item.article_category
-                            )}/${sanitizeUrl(item?.title)}`}
+                            href={`/${sanitizeUrl(item?.title)}`}
                             title={item?.title || "Blog post"}
                           >
                             <Image
@@ -177,9 +182,7 @@ export default function Categories({
                           </Link>
                           <Link
                             title={item?.title || "Blog post"}
-                            href={`/${sanitizeUrl(
-                              item.article_category
-                            )}/${sanitizeUrl(item?.title)}`}
+                            href={`/${sanitizeUrl(item?.title)}`}
                             className="absolute top-4 left-4 bg-white lg:bg-transparent md:top-44 md:left-[-24px] block z-10 md:rotate-[-90deg] origin-top-left"
                           >
                             <span className="items-center flex flex-row font-bold gap-2 px-3 py-1 text-xs text-gray-300 rounded-[4px] whitespace-nowrap">
@@ -195,9 +198,7 @@ export default function Categories({
                         <div className=" h-full flex flex-col items-center justify-between space-y-2  ">
                           <Link
                             title={item?.title || "Blog post"}
-                            href={`/${sanitizeUrl(
-                              item.article_category
-                            )}/${sanitizeUrl(item?.title)}`}
+                            href={`/${sanitizeUrl(item?.title)}`}
                             className="px-6 text-[28px] tracking-tighter leading-[28px] font-bold text-gray-700 mb-3 "
                           >
                             <h2>{item?.title}</h2>
@@ -257,11 +258,11 @@ export default function Categories({
             },
             {
               "@type": "WebPage",
-              "@id": `https://${domain}/${category}`,
-              url: `https://${domain}/${category}`,
+              "@id": `https://${domain}/${categoryPage}`,
+              url: `https://${domain}/${categoryPage}`,
               name: meta?.title?.replaceAll(
                 "##category##",
-                category
+                categoryPage
                   ?.replace(/[-&]+/g, " ")
                   .replace(/\s+/g, " ")
                   .trim()
@@ -271,7 +272,7 @@ export default function Categories({
               ),
               description: meta?.description?.replaceAll(
                 "##category##",
-                category
+                categoryPage
                   ?.replace(/[-&]+/g, " ")
                   .replace(/\s+/g, " ")
                   .trim()
@@ -287,7 +288,7 @@ export default function Categories({
             },
             {
               "@type": "ItemList",
-              url: `https://${domain}/${category}`,
+              url: `https://${domain}/${categoryPage}`,
               name: "blog",
               itemListElement: blog_list?.map((blog, index) => ({
                 "@type": "ListItem",
@@ -310,24 +311,29 @@ export default function Categories({
 
 export async function getServerSideProps({ req, query }) {
   const domain = getDomain(req?.headers?.host);
-  const { category } = query;
+  const { categoryPage } = query;
 
   let layoutPages = await callBackendApi({
     domain,
     type: "layout",
   });
 
-  const logo = await callBackendApi({ domain, type: "logo" });
-  const favicon = await callBackendApi({ domain, type: "favicon" });
-  const banner = await callBackendApi({ domain, type: "banner" });
-
+  const categories = await callBackendApi({ domain, type: "categories" });
+  const copyright = await callBackendApi({ domain, type: "copyright" });
   const blog_list = await callBackendApi({ domain, type: "blog_list" });
-  const categories = await callBackendApi({
-    domain,
-    type: "categories",
-  });
-  const meta = await callBackendApi({ domain, type: "meta_category" });
+  const nav_type = await callBackendApi({ domain, type: "nav_type" });
+  const tag_list = await callBackendApi({ domain, type: "tag_list" });
   const about_me = await callBackendApi({ domain, type: "about_me" });
+  const logo = await callBackendApi({ domain, type: "logo" });
+  const meta = await callBackendApi({ domain, type: "meta_category" });
+
+  const contact_details = await callBackendApi({
+    domain,
+    type: "contact_details",
+  });
+
+  let project_id = logo?.data[0]?.project_id || null;
+  let imagePath = await getImagePath(project_id, domain);
 
   let page = null;
   if (Array.isArray(layoutPages?.data) && layoutPages.data.length > 0) {
@@ -341,12 +347,9 @@ export async function getServerSideProps({ req, query }) {
     };
   }
 
-  let project_id = logo?.data[0]?.project_id || null;
-  let imagePath = await getImagePath(project_id, domain);
-
   const categoryExists = categories?.data[0]?.value?.some(
     (cat) =>
-      cat?.title?.toLowerCase() === category?.replaceAll("-", " ").toLowerCase()
+      cat?.title?.toLowerCase() === categoryPage?.replaceAll("-", " ").toLowerCase()
   );
 
   if (!categoryExists) {
@@ -357,17 +360,18 @@ export async function getServerSideProps({ req, query }) {
 
   return {
     props: {
+      page,
       domain,
       imagePath,
       meta: meta?.data[0]?.value || null,
-      favicon: favicon?.data[0]?.file_name || null,
-      logo: logo?.data[0],
-      banner: banner?.data[0] || null,
-      blog_list: blog_list?.data[0]?.value,
+      logo: logo?.data[0] || null,
+      blog_list: blog_list?.data[0]?.value || [],
       categories: categories?.data[0]?.value || null,
-      domain: domain === "hellospace.us" ? req?.headers?.host : domain,
-      about_me: about_me?.data[0] || null,
-      page,
+      about_me: about_me.data[0] || null,
+      contact_details: contact_details?.data[0]?.value || null,
+      copyright: copyright?.data[0]?.value || null,
+      tag_list: tag_list?.data[0]?.value || null,
+      nav_type: nav_type?.data[0]?.value || {},
     },
   };
 }

@@ -31,7 +31,7 @@ export default function Popular({ blog_list = [], imagePath }) {
         <Link
           title={item.title}
           href={
-            `/${sanitizeUrl(item.article_category)}/${sanitizeUrl(
+            `/${sanitizeUrl(
               item?.title
             )}` || "#"
           }
@@ -50,9 +50,7 @@ export default function Popular({ blog_list = [], imagePath }) {
           <Link
             title={item.article_category}
             href={
-              `/${sanitizeUrl(item.article_category)}/${sanitizeUrl(
-                item?.title
-              )}` || "#"
+              `/category/${sanitizeUrl(item.article_category)}}` || "#"
             }
             className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm md:bg-white/90 md:top-32 md:left-0 block z-10 transition-transform hover:translate-x-1"
           >
@@ -70,7 +68,7 @@ export default function Popular({ blog_list = [], imagePath }) {
         <Link
           title={item.title}
           href={
-            `/${sanitizeUrl(item.article_category)}/${sanitizeUrl(
+            `/${sanitizeUrl(
               item?.title
             )}` || "#"
           }

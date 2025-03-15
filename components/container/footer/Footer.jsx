@@ -36,7 +36,7 @@ export default function Footer({ articles = [], categories = [], imagePath }) {
     <div className="flex items-start gap-3 mb-6">
       <div className="relative w-20 h-20 flex-shrink-0 bg-background1 rounded-full overflow-hidden">
         <Link
-          href={`/${sanitizeUrl(item.article_category || "")}/${sanitizeUrl(
+          href={`/${sanitizeUrl(
             item.title || ""
           )}`}
           title={item.title || "Read article"}
@@ -52,7 +52,7 @@ export default function Footer({ articles = [], categories = [], imagePath }) {
       </div>
       <div>
         <Link
-          href={`/${sanitizeUrl(item.article_category || "")}/${sanitizeUrl(
+          href={`/${sanitizeUrl(
             item.title || ""
           )}`}
           className="text-lg font-extrabold hover:underline"
@@ -130,7 +130,7 @@ export default function Footer({ articles = [], categories = [], imagePath }) {
                 key={index}
               >
                 <Link
-                  href={`/${sanitizeUrl(category.title || "")}`}
+                  href={`/category/${sanitizeUrl(category.title || "")}`}
                   className="hover:text-gray-600 transition-colors duration-200 block p-2"
                   title={`View ${category.title} category`}
                 >

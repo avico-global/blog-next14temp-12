@@ -59,17 +59,11 @@ export default function Blog({
   );
 
   useEffect(() => {
-    if (
-      category.includes("%20") ||
-      category.includes(" ") ||
-      blog.includes("%20") ||
-      blog.includes(" ", "-")
-    ) {
-      const newCategory = sanitizeUrl(category);
+    if (blog.includes("%20") || blog.includes(" ", "-")) {
       const newBlog = sanitizeUrl(blog);
-      router.replace(`/${newCategory}/${newBlog}`);
+      router.replace(`/${newBlog}`);
     }
-  }, [category, router, blog]);
+  }, [router, blog]);
 
   const page = layout?.find((page) => page.page === "blog page");
 
@@ -232,47 +226,65 @@ export async function getServerSideProps({ req, query }) {
   const domain = getDomain(req?.headers?.host);
   const { category, blog } = query;
 
-  const categories = await callBackendApi({ domain, type: "categories" });
   const blog_list = await callBackendApi({ domain, type: "blog_list" });
 
   const isValidBlog = blog_list?.data[0]?.value?.find(
-    (item) => sanitizeUrl(item.title) === sanitizeUrl(blog)
+    (item) => sanitizeUrl(item.title) === blog
   );
 
-  const categoryExists = categories?.data[0]?.value?.some(
-    (cat) => sanitizeUrl(cat?.title) === sanitizeUrl(category)
-  );
+  let layoutPages = await callBackendApi({
+    domain,
+    type: "layout",
+  });
 
-  if (!categoryExists || !isValidBlog) {
+  const nav_type = await callBackendApi({ domain, type: "nav_type" });
+  const categories = await callBackendApi({ domain, type: "categories" });
+  const myblog = await callBackendApi({ domain, type: isValidBlog?.key });
+  const tag_list = await callBackendApi({ domain, type: "tag_list" });
+  const logo = await callBackendApi({ domain, type: "logo" });
+  const favicon = await callBackendApi({ domain, type: "favicon" });
+  const about_me = await callBackendApi({ domain, type: "about_me" });
+  const contact_details = await callBackendApi({
+    domain,
+    type: "contact_details",
+  });
+
+  if (!isValidBlog) {
     return {
       notFound: true,
     };
   }
 
-  const myblog = await callBackendApi({ domain, type: isValidBlog?.key });
-  const logo = await callBackendApi({ domain, type: "logo" });
-  const favicon = await callBackendApi({ domain, type: "favicon" });
-  const about_me = await callBackendApi({ domain, type: "about_me" });
+  let page = null;
+  if (Array.isArray(layoutPages?.data) && layoutPages.data.length > 0) {
+    const valueData = layoutPages.data[0].value;
+    page = valueData?.find((page) => page.page === "blog page");
+  }
 
-  const layout = await callBackendApi({ domain, type: "layout" });
-  const blog_type = await callBackendApi({ domain, type: "blog_type" });
+  if (!page?.enable) {
+    return {
+      notFound: true,
+    };
+  }
 
   let project_id = logo?.data[0]?.project_id || null;
   let imagePath = await getImagePath(project_id, domain);
 
   return {
     props: {
+      page,
       domain,
       imagePath,
+      project_id,
       logo: logo?.data[0] || null,
       myblog: myblog?.data[0] || {},
-      layout: layout?.data[0]?.value || null,
-      blog_list: blog_list.data[0]?.value || null,
-      categories: categories?.data[0]?.value || null,
       about_me: about_me.data[0] || null,
+      nav_type: nav_type?.data[0]?.value || {},
+      tag_list: tag_list?.data[0]?.value || null,
+      blog_list: blog_list.data[0]?.value || null,
       favicon: favicon?.data[0]?.file_name || null,
-      blog_type: blog_type?.data[0]?.value || {},
-      project_id,
+      categories: categories?.data[0]?.value || null,
+      contact_details: contact_details?.data[0]?.value || null,
     },
   };
 }

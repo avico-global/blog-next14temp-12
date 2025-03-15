@@ -35,16 +35,14 @@ export default function Rightbar({ articles, categories, heading, className }) {
             </div>
             <div className="flex flex-col gap-2.5">
               <Link
-                href={`/${sanitizeUrl(
-                  item.article_category || ""
-                )}/${sanitizeUrl(item.title || "")}`}
+                href={`/${sanitizeUrl(item.title || "")}`}
                 className="text-[17px] leading-7 font-bold group-hover:text-primary1 transition-colors duration-300"
                 title={`Read full article: ${item.title}`}
               >
                 {item.title}
               </Link>
               <Link
-                href={`/${sanitizeUrl(item.article_category || "")}`}
+                href={`/category/${sanitizeUrl(item.article_category || "")}`}
                 className="text-sm text-gray-500 hover:text-primary1 transition-colors duration-300 flex items-center gap-1.5 w-fit px-3 py-1 rounded-full bg-gray-50 hover:bg-gray-100"
                 title={`View all articles in ${item.article_category}`}
               >
@@ -63,7 +61,7 @@ export default function Rightbar({ articles, categories, heading, className }) {
               >
                 <Link
                   className="flex flex-row text-center items-center justify-between group"
-                  href={`/${sanitizeUrl(category.title || "")}`}
+                  href={`/category/${sanitizeUrl(category.title || "")}`}
                   title={`Browse all articles in ${category.title} category`}
                 >
                   <span className="group-hover:text-primary1 transition-colors duration-300 pl-2">

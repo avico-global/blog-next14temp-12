@@ -42,7 +42,7 @@ export default function Fromtheblog({
       <div className="relative w-full overflow-hidden">
         <Link
           href={
-            `/${sanitizeUrl(item.article_category)}/${sanitizeUrl(
+            `/${sanitizeUrl(
               item?.title
             )}` || "#"
           }
@@ -62,7 +62,7 @@ export default function Fromtheblog({
           <Link
             title={item.article_category}
             href={
-              `/${sanitizeUrl(item.article_category)}/${sanitizeUrl(
+              `/${sanitizeUrl(
                 item?.title
               )}` || "#"
             }
@@ -82,7 +82,7 @@ export default function Fromtheblog({
         <Link
           title={item.title}
           href={
-            `/${sanitizeUrl(item.article_category)}/${sanitizeUrl(
+            `/${sanitizeUrl(
               item?.title
             )}` || "#"
           }
@@ -134,7 +134,7 @@ export default function Fromtheblog({
                   title={article.title}
                   key={article.id || index}
                   href={
-                    `/${sanitizeUrl(article.article_category)}/${sanitizeUrl(
+                    `/${sanitizeUrl(
                       article?.title
                     )}` || "#"
                   }

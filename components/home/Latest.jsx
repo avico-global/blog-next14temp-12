@@ -35,7 +35,7 @@ export default function Latest({ blog_list = [], imagePath, articles, categories
       <div className="relative w-full overflow-hidden">
         <Link
           href={
-            `/${sanitizeUrl(item.article_category)}/${sanitizeUrl(
+            `/${sanitizeUrl(
               item?.title
             )}` || "#"
           }
@@ -54,7 +54,7 @@ export default function Latest({ blog_list = [], imagePath, articles, categories
         {item.article_category && (
           <Link
           href={
-            `/${sanitizeUrl(item.article_category)}/${sanitizeUrl(
+            `/${sanitizeUrl(
               item?.title
             )}` || "#"
           }
@@ -72,7 +72,7 @@ export default function Latest({ blog_list = [], imagePath, articles, categories
       <div className="px-[30px]">
         <Link
          href={
-          `/${sanitizeUrl(item.article_category)}/${sanitizeUrl(
+          `/${sanitizeUrl(
             item?.title
           )}` || "#"
         }
