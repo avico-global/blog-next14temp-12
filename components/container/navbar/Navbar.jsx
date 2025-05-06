@@ -100,16 +100,9 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
               </span>
               <span className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-pink-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></span>
             </button>
-            <Link
-              title="Home"
-              href="/"
-              className="transform hover:scale-105 transition-transform duration-300"
-            >
-              <div className="relative group">
-                <Logo logo={logo} imagePath={imagePath} />
-                <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full blur-lg opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
-              </div>
-            </Link>
+            <div className="transform hover:scale-105 transition-transform duration-300">
+              <Logo logo={logo} imagePath={imagePath} />
+            </div>
           </div>
 
           {/* Desktop Navigation */}

@@ -101,9 +101,9 @@ export default function Categories({
               .join(" ")
           )}
         />
-        <link rel="author" href={`https://www.${domain}`} />
-        <link rel="publisher" href={`https://www.${domain}`} />
-        <link rel="canonical" href={`https://www.${domain}/${categoryPage}`} />
+        <link rel="author" href={`https://${domain}`} />
+        <link rel="publisher" href={`https://${domain}`} />
+        <link rel="canonical" href={`https://${domain}/category/${categoryPage}`} />
         {/* <meta name="robots" content="noindex" /> */}
         <meta name="theme-color" content="#008DE5" />
         <link rel="manifest" href="/manifest.json" />
