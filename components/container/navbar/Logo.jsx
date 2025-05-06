@@ -62,7 +62,7 @@ const Logo = ({ logo, imagePath }) => {
     <Link
       title={`Logo - ${hostName}`}
       href="/"
-      className="flex items-center justify-center cursor-pointer "
+      className="flex items-center justify-center cursor-pointer  z-10  "
     >
       <div className="">
         {logoType === "image" ? (
@@ -77,11 +77,11 @@ const Logo = ({ logo, imagePath }) => {
               style={logoStyle}
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full blur-lg opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-gradient-to-r hover:from-background3 hover:via-background4 hover:to-background1 rounded-full blur-lg opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
           </div>
         ) : logoType === "text" ? (
           <h2
-            className="text-4xl font-extrabold cursor-pointer  py-1 whitespace-nowrap hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500 transition-all duration-300"
+            className="text-4xl font-extrabold cursor-pointer  py-1 whitespace-nowrap hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-background3 hover:via-background4 hover:to-background1 transition-all duration-300"
             style={{
               fontSize: `${fontSize}px`,
               fontWeight: isBold ? "bold" : "normal",
