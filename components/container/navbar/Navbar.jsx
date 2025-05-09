@@ -93,7 +93,7 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
             <button
               title="Open Menu"
               onClick={() => setSidebar(true)}
-              className="relative overflow-hidden group px-5 py-2.5 rounded-full bg-gradient-to-r from-background1 via-background3 to-background4 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
+              className="relative overflow-hidden group px-2 lg:px-5 py-1 lg:py-2.5 rounded-full bg-gradient-to-r from-background1 via-background3 to-background4 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
             >
               <span className="relative z-10 text-sm font-medium tracking-wide">
                 Menu
@@ -139,7 +139,7 @@ export default function Navbar({ logo, categories, imagePath, blog_list }) {
             <button
               title="Search Articles"
               onClick={handleSearchToggle}
-              className="relative overflow-hidden group px-5 py-2.5 rounded-full bg-gradient-to-r from-background1 via-background2 to-background4 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
+              className="relative overflow-hidden group  px-2 lg:px-5  py-1 lg:py-2.5 rounded-full bg-gradient-to-r from-background1 via-background2 to-background4 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
             >
               <span className="relative z-10 text-sm font-medium tracking-wide flex items-center gap-2">
                 <Search size={16} />
