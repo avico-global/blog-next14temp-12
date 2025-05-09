@@ -119,7 +119,7 @@ export default function Blog({
                       title={article.title}
                       key={article.id || index}
                       href={encodeURI(
-                        `/blog/${
+                        `/${
                           article.slug ||
                           article.title.toLowerCase().replace(/ /g, "-")
                         }`
